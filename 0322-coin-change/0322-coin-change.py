@@ -1,29 +1,19 @@
 class Solution:
-
-    def __init__(self):
-        self.memo = []
-        
     def coinChange(self, coins: List[int], amount: int) -> int:
-        self.memo = [-666]*(amount+1)
-        return self.dp(coins, amount)
+        dp = [float('inf')] * (amount + 1)
 
-    def dp(self, coins, amount):
-        if amount == 0:
-            return 0
-        if amount < 0:
-            return -1
+        # TODO:
+        # 1. Initialize base case
+        # 2. Fill dp from 1 to amount
+        # 3. Return -1 if unreachable
 
-        if self.memo[amount] != -666:
-            return self.memo[amount]
+        dp[0] = 0
 
-        res = float('inf')
+        for i in range(1, amount + 1):
+            for coin in coins:
+                if i - coin < 0:
+                    continue
+                dp[i] = min(dp[i], dp[i-coin] + 1)
+        return dp[amount] if dp[amount] != float('inf') else -1
 
-        for coin in coins:
-            subproblem = self.dp(coins, amount-coin)
-            if subproblem == -1:
-                continue
-            res = min(res, subproblem+1)
-        self.memo[amount] = res if res != float('inf') else -1
-        return self.memo[amount]
-
-
+        return -1
