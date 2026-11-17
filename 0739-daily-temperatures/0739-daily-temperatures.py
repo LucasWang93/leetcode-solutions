@@ -4,12 +4,11 @@ class Solution:
         answers = [0] * n
         stk = []
 
-        for i in range(n-1, -1, -1):
-            while stk and (temperatures[stk[-1]] <= temperatures[i]):
-                # answers[stk[-1]] = i - stk[-1]
-                stk.pop()
-            if stk:
-                answers[i] = stk[-1] - i
+        for i, temp in enumerate(temperatures):
+            while stk and (temperatures[stk[-1]] < temp):
+                prev = stk.pop()
+                answers[prev] = i - prev
+                
             stk.append(i)
 
         return answers
