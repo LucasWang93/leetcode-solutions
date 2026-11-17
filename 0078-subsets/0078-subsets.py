@@ -3,15 +3,12 @@ class Solution:
         res = []
         path = []
 
-        def dfs(i):
-            if i == len(nums):
-                res.append(path.copy())
-                return
-
-            path.append(nums[i])
-            dfs(i+1)
-            path.pop()
-            dfs(i+1)
+        def dfs(start):
+            res.append(path.copy())
+            for i in range(start, len(nums)):
+                path.append(nums[i])
+                dfs(i+1)
+                path.pop()
 
         dfs(0)
         return res
